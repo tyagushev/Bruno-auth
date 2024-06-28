@@ -1,0 +1,39 @@
+meta {
+  name: Auth
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://try.vikunja.io/api/v1/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "long_token": true,
+      "password": "123456qQ!",
+      "totp_passcode": "123456qQ!",
+      "username": "Test"
+  }
+}
+
+tests {
+  // Тест на статус-код ответа 200
+    test("Тест на статус-код ответа 200", function() {
+        const data = res.getBody();
+        expect(res.getStatus()).to.equal(200);
+    });
+  
+  // Тест на извлечение токена и запись его в переменные окружения
+  test("Извлечение токена и запись его в переменные окружения", function() {
+      const data = res.getBody();
+      const dataString = JSON.stringify(data); 
+  // Преобразуем объект в строку JSON
+      const jsonResponse = JSON.parse(dataString); 
+  // Парсим строку JSON обратно в объект
+      const token = jsonResponse.token;
+      bru.setEnvVar("token", token);
+  });
+}

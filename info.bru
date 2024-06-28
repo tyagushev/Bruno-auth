@@ -1,0 +1,20 @@
+meta {
+  name: info
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://try.vikunja.io/api/v1/labels/2
+  body: none
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{token}}
+}
